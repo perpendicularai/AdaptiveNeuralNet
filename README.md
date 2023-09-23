@@ -1,5 +1,5 @@
 # AdaptiveNeuralNet
-If you're a neuro-scientist you may already be aware of neurogensis in the brain. This is a repo that lends strongly from the concept of neurogenesis whereby it expands as amount of samples or inputs increase.
+If you're a neuro-scientist you may already be aware of neurogensis in the brain. This is a repo that lends strongly from the concept of neurogenesis whereby it expands as the amount of samples or inputs increase.
 
 ## Output
 The output of the neural net is stored as csv files in the amount of per iterations per file, which is 5 although can vary depending on your neural network configuration.

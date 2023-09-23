@@ -1,39 +1,28 @@
-import os
-import glob
-import re
-import numpy as np
-import plotly.graph_objects as go
+#### Please ensure that you run he neural_net_adaptive.py before running this script.                                                                #
+#### Once the neural_net_apdaptive.py script is run, you need to load the data below and store in the data variable                                  #
+#### Each file will be store as a csv.                                                                                                               #
+#### Please ensure you have sufficient disk space before running if configured to compute a large amount of samples and iterations.                  #
+#### #################################################################################################################################################
+df = pd.DataFrame(data)
 
-# Directory where CSV files are located
-csv_directory = '/Datasets'
+# Create a figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
 
-# Regular expression pattern for matching file names like "output_iteration_10_sample_1**.csv"
-pattern = r'^output_iteration_10_sample_1[0-9][0-9][0-9].csv$'
+# Plot the data as a line plot
+for column in df.columns:
+    plt.plot(df.index, df[column], label=column)
 
-# Find CSV files matching the pattern
-csv_files = glob.glob(os.path.join(csv_directory, '*.csv'))
-filtered_csv_files = [file for file in csv_files if re.match(pattern, os.path.basename(file))]
+# Add data labels to the data points when hovering
+for column in df.columns:
+    for i, val in enumerate(df[column]):
+        plt.annotate(f'{val:.3f}', (df.index[i], val), textcoords="offset points", xytext=(0, 10), ha='center')
 
-# Initialize a Plotly subplot
-fig = go.Figure()
+# Customize the plot
+plt.title('3x3 Neural Net')
+plt.xlabel('Index')
+plt.ylabel('Values')
+plt.legend()
+plt.grid(True)
 
-# Iterate through filtered CSV files
-for i, csv_file in enumerate(filtered_csv_files):
-    # Load CSV file into a NumPy array
-    data = np.genfromtxt(csv_file, delimiter=',')
-    
-    # Verify if the shape is 5x5
-    if data.shape == (5, 5):
-        # Create a heatmap trace for each 5x5 array
-        trace = go.Heatmap(z=data, colorscale='Viridis', showscale=False, name=f'Data {i + 1}')
-        fig.add_trace(trace)
-
-# Customize the layout
-fig.update_layout(
-    title='5x5 Array Visualization',
-    xaxis_title='Columns',
-    yaxis_title='Rows',
-)
-
-# Show the Plotly figure
-fig.show()
+# Show the plot
+plt.show()
